@@ -17,6 +17,9 @@ class Movies extends Migration
             $table->id();
             $table->text('title')->comment('タイトル');
             $table->text('image_url')->comment('画像URL');
+            $table->integer('published_year')->comment('公開年');
+            $table->boolean('is_showing')->default(false); ;
+            $table->text('description')->comment('概要');
             $table->timestamps();
         });
     }
