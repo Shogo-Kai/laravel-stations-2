@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\LaravelStations\Station6;
 
-use App\Movie;
+use App\Models\Movie;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

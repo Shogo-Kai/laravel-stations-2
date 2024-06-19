@@ -14,8 +14,8 @@ class MovieFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->realText(10),
-            'image_url' => $this->faker->imageUrl($width = 640, $height = 480),
+            'title' => $this->faker->sentence,
+            'image_url' => $this->faker->imageUrl(),
             'published_year' => $this->faker->year,
             'is_showing' => $this->faker->boolean,
             'description' => $this->faker->paragraph,

@@ -24,12 +24,11 @@ class CreateMovieRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'unique:movies'],
+            'title' => ['required', 'string', 'unique:movies'],
             'image_url' => ['required', 'url'],
-            'published_year' => ['required', 'gte:1900'],
-            'description' => ['required'],
+            'published_year' => ['required', 'integer', 'between:2000,2024'],
+            'description' => ['required', 'string'],
             'is_showing' => ['required', 'boolean'],
-            'genre' => ['required'],
         ];
     }
 }
