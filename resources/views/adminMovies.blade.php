@@ -20,6 +20,7 @@
         </li>
         <li>概要: {{ $movie->description }}</li>
         <img src="{{ $movie->image_url }}" alt="{{ $movie->title }}のポスター"  width="640" height="480">
+        <button onclick="location.href='/admin/movies/{{ $movie->id }}/edit/'">編集</button>
     @endforeach
     </ul>
 </body>
