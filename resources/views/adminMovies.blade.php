@@ -7,6 +7,9 @@
     <title>Practice</title>
 </head>
 <body>
+    @if (session('success'))
+        <div class="success">{{ session('success') }}</div>
+    @endif
     <ul>
     @foreach ($movies as $movie)
         <li>映画タイトル: {{ $movie->title }}</li>
@@ -19,8 +22,13 @@
         @endif
         </li>
         <li>概要: {{ $movie->description }}</li>
-        <img src="{{ $movie->image_url }}" alt="{{ $movie->title }}のポスター"  width="640" height="480">
+        <img src="{{ $movie->image_url }}" alt="{{ $movie->title }}のポスター"  width="640" height="480"><br>
         <button onclick="location.href='/admin/movies/{{ $movie->id }}/edit/'">編集</button>
+        <form action="/admin/movies/{{ $movie->id }}/destroy" method="post">
+            @method('DELETE')
+            @csrf
+            <button type="submit" onclick='return confirm("本当に削除しますか？")'>削除</button>
+        </form>
     @endforeach
     </ul>
 </body>

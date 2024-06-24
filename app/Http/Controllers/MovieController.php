@@ -35,7 +35,7 @@ class MovieController extends Controller
             'description' => $request->input('description'),
           ]);  
       
-          return redirect('/admin/movies');
+          return redirect('/admin/movies/');
     }
     public function edit($id)
     {
@@ -53,6 +53,13 @@ class MovieController extends Controller
             'description' => $request->input('description'),
         ]);
 
-        return redirect('/admin/movies');
+        return redirect('/admin/movies/');
+    }
+    public function destroy($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $movie->delete();
+
+        return redirect('/admin/movies/')->with('success', '削除が完了しました');
     }
 }

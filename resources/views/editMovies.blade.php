@@ -20,8 +20,8 @@
     @endif
 
     <form action="{{ url('/admin/movies/{id}/update') }}" method="post">
-    @method('PATCH')
-    @csrf
+        @method('PATCH')
+        @csrf
         <label>映画タイトル</label><br />
         <input type="text" name="title" value="{{ $movie->title }}"/><br />
         <label>画像URL</label><br />

@@ -20,7 +20,7 @@
     @endif
 
     <form action="{{ url('/admin/movies/store') }}" method="post">
-    @csrf
+        @csrf
         <label>映画タイトル</label><br />
         <input type="text" name="title" value="{{ old('title') }}"/><br />
         <label>画像URL</label><br />
