@@ -27,7 +27,7 @@
         <input type="url" name="image_url" value="{{ old('image_url') }}"/><br />
         <label>公開年</label><br />
         <input type="text" name="published_year" value="{{ old('published_year') }}"/><br />
-        <label>公開中か否か</label><br />
+        <label>上映中か否か</label><br />
         <input type="checkbox" name="is_showing" value="1"/><br />
         <label>概要</label><br />
         <textarea name="description" value="{{ old('description') }}"> </textarea><br />
