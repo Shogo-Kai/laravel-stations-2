@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Http\Requests\CreateMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
@@ -10,14 +11,27 @@ use App\Http\Controllers\Controller;
 
 class MovieController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $movies = Movie::all();
+        $keyword = $request->query('keyword');
+        $is_showing = $request->query('is_showing');
+        $query = Movie::query();
+
+        if(!empty($keyword)) {
+            $query->where('title', 'like', "%{$keyword}%")
+                ->orWhere('description', 'like', "%{$keyword}%");
+        }
+
+        if(!is_null($is_showing) && $is_showing !== '') {
+            $query->where('is_showing', $is_showing);
+        }
+
+        $movies = $query->paginate(20);
         return view('getMovies', ['movies' => $movies]);
     }
     public function adminMovies()
     {
-        $movies = Movie::all();
+        $movies = Movie::paginate(20);
         return view('adminMovies', ['movies' => $movies]);
     }
     public function create()
