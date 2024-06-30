@@ -15,5 +15,11 @@ class Movie extends Model
         'published_year',// 映画の公開年
         'is_showing',    // 映画が上映中かどうか
         'description',   // 映画の説明
+        'genre_id',
     ];
+
+    public function genre()
+    {
+        return $this->belongsTo(Genre::class);
+    }
 }

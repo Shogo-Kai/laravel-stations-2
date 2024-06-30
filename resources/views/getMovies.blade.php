@@ -35,6 +35,7 @@
         <thead>
             <tr>
                 <th>映画タイトル</th>
+                <th>映画のジャンル</th>
                 <th>概要</th>
                 <th>上映中か否か</th>
                 <th>公開年</th>
@@ -45,6 +46,7 @@
             @foreach ($movies as $movie)
                 <tr>
                     <td>{{ $movie->title }}</td>
+                    <td>{{ $movie->genre ? $movie->genre->name : '' }}</td>
                     <td>{{ $movie->description }}</td>
                     <td>{{ $movie->is_showing ? '上映中' : '上映予定' }}</td>
                     <td>{{ $movie->published_year }}</td>

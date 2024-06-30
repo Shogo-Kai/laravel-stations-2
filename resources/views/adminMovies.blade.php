@@ -7,12 +7,24 @@
     <title>管理者画面</title>
 </head>
 <body>
+    @if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    
     @if (session('success'))
         <div class="success">{{ session('success') }}</div>
     @endif
+
     <ul>
     @foreach ($movies as $movie)
         <li>映画タイトル: {{ $movie->title }}</li>
+        <li>映画のジャンル: {{ $movie->genre ? $movie->genre->name : '未設定' }}</li>
         <li>公開年: {{ $movie->published_year }}</li>
         <li>
         @if($movie->is_showing)

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\Movie;
+use App\Models\Genre;
 use App\Http\Requests\CreateMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Http\Controllers\Controller;
@@ -41,33 +44,73 @@ class MovieController extends Controller
     public function store(CreateMovieRequest $request)
     {
 
-        Movie::create([  
-            'title' => $request->input('title'),  
-            'image_url' => $request->input('image_url'),
-            'published_year' => $request->input('published_year'),
-            'is_showing' => $request->input('is_showing'),
-            'description' => $request->input('description'),
-          ]);  
-      
-          return redirect('/admin/movies/');
+        DB::beginTransaction();
+
+        try {
+            Log::info('Request is_showing: ' . $request->input('is_showing'));
+
+            $genreName = $request->input('genre');
+            $genre = Genre::firstOrCreate(['name' => $genreName]);
+
+            Movie::create([  
+                'title' => $request->input('title'),  
+                'image_url' => $request->input('image_url'),
+                'published_year' => $request->input('published_year'),
+                'is_showing' => $request->input('is_showing'),
+                'description' => $request->input('description'),
+                'genre_id' => $genre->id,
+              ]);
+
+              DB::commit();
+
+              return redirect('/admin/movies/')->with('success', '登録が完了しました');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to create movie: ' . $e->getMessage());
+            // 修正: 例外が発生した場合に500エラーを返す
+            return response()->view('errors.500', [], 500);
+        }
+
     }
     public function edit($id)
     {
-        $movie = Movie::findOrFail($id);
+        // ジャンル情報を含めて映画を取得
+        $movie = Movie::with('genre')->findOrFail($id);
+
         return view('editMovies', ['movie' => $movie]);
     }
     public function update(UpdateMovieRequest $request, $id)
     {
-        $movie = Movie::findOrFail($id);
-        $movie->update([
+        // ジャンル情報を含めて映画を取得
+        $movie = Movie::with('genre')->findOrFail($id);
+
+        DB::beginTransaction();
+
+        try {
+            $genreName = $request->input('genre');
+            $genre = Genre::firstOrCreate(['name' => $genreName]);
+            
+            $movie->update([
             'title' => $request->input('title'),  
             'image_url' => $request->input('image_url'),
             'published_year' => $request->input('published_year'),
             'is_showing' => $request->input('is_showing'),
             'description' => $request->input('description'),
-        ]);
+            'genre_id' => $genre->id,
+            ]);
 
-        return redirect('/admin/movies/');
+            DB::commit();
+
+            return redirect('/admin/movies/')->with('success', '更新が完了しました');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to create movie: ' . $e->getMessage());
+            // 修正: 例外が発生した場合に500エラーを返す
+            return response()->view('errors.500', [], 500);
+        }
+    
     }
     public function destroy($id)
     {

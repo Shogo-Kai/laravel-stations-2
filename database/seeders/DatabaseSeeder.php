@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use App\Models\Practice;
 use App\Models\Movie;
-use Illuminate\Database\Seeder;
+use App\Models\Genre;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,7 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Practice::factory(10)->create();
-        Movie::factory(10)->create();
+        // ジャンルをいくつか作成
+        $genres = Genre::factory(2)->create();
+
+        // 各ジャンルに対して映画を生成
+        $genres->each(function($genre) {
+            Movie::factory(2)->create([
+                'genre_id' => $genre->id
+            ]);
+        });
     }
 }

@@ -29,6 +29,7 @@ class CreateMovieRequest extends FormRequest
             'published_year' => ['required', 'integer', 'between:2000,2024'],
             'description' => ['required', 'string'],
             'is_showing' => ['required', 'boolean'],
+            'genre' => ['required', 'string'],
         ];
     }
 }
