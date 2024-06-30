@@ -25,5 +25,9 @@ class DatabaseSeeder extends Seeder
                 'genre_id' => $genre->id
             ]);
         });
+
+        $this->call([
+            SheetTableSeeder::class,
+        ]);
     }
 }
