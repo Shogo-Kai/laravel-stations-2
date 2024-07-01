@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Movie;
 use App\Models\Genre;
+use App\Models\Schedule;
 use App\Http\Requests\CreateMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Http\Controllers\Controller;
@@ -118,5 +119,13 @@ class MovieController extends Controller
         $movie->delete();
 
         return redirect('/admin/movies/')->with('success', '削除が完了しました');
+    }
+
+    public function schedules($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $schedules = Schedule::where('movie_id', $id)->orderBy('start_time', 'asc')->get();
+
+        return view('detailMovie', compact('movie', 'schedules'));
     }
 }
