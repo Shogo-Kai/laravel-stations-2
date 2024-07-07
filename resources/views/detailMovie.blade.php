@@ -7,36 +7,20 @@
     <title>映画の詳細</title>
 </head>
 <body>
-<div class="container">
-    <h1>映画の詳細</h1>
+    <h1>{{ $movie->title }} (Movie_ID; {{ $movie->id }})</h1>
+    <p>{{ $movie->published_year }}</p>
+    <p>{{ $movie->description }}</p>
+    <img src="{{ $movie->image_url }}" alt="{{ $movie->title }}のポスター">
+    
+    <h2>上映スケジュール</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>映画タイトル</th>
-                <th>映画のジャンル</th>
-                <th>概要</th>
-                <th>上映中か否か</th>
-                <th>公開年</th>
-                <th>画像</th>
-                <th>開始時刻</th>
-                <th>終了時刻</th>
-            </tr>
-        </thead>
-        <tbody>
-                <tr>
-                    <td>{{ $movie->title }}</td>
-                    <td>{{ $movie->genre ? $movie->genre->name : '' }}</td>
-                    <td>{{ $movie->description }}</td>
-                    <td>{{ $movie->is_showing ? '上映中' : '上映予定' }}</td>
-                    <td>{{ $movie->published_year }}</td>
-                    <td><img src="{{ $movie->image_url }}" alt="{{ $movie->title }}のポスター"></td>
+    <ul>
             @foreach ($schedules as $schedule)
-                    <td>{{ $schedule->start_time }}</td>
-                    <td>{{ $schedule->end_time }}</td>
-                </tr>
+                <li>
+                    <span>上映時間: {{ $schedule->start_time->format('H:i')}}</span>
+                    <span>- {{ $schedule->end_time->format('H:i')}}</span>
+                </li>
             @endforeach
-        </tbody>
-    </table>
+    </ul>
 </body>
 </html>
