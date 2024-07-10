@@ -40,6 +40,7 @@
                 <th>上映中か否か</th>
                 <th>公開年</th>
                 <th>画像</th>
+                <th>上映時間</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +52,7 @@
                     <td>{{ $movie->is_showing ? '上映中' : '上映予定' }}</td>
                     <td>{{ $movie->published_year }}</td>
                     <td><img src="{{ $movie->image_url }}" alt="{{ $movie->title }}のポスター"></td>
+                    <td><a href="{{ url('/movies/' . $movie->id )}}"></td>
                 </tr>
             @endforeach
         </tbody>
