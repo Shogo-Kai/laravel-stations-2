@@ -30,11 +30,10 @@ Route::get('/getPractice', [PracticeController::class, 'getPractice']);
 
 //映画一覧のページ
 Route::get('/movies', [MovieController::class, 'index']);
-
 //映画作品詳細ページ
 Route::get('/movies/{id}', [MovieController::class, 'schedules']);
-
-Route::get('/admin/schedules', [ScheduleController::class, 'adminSchedules']);
+//座席表
+Route::get('/sheets', [UserMovieController::class, 'sheets']);
 
 //管理者諸々
 //管理画面
@@ -50,6 +49,5 @@ Route::patch('/admin/movies/{id}/update', [MovieController::class, 'update']);
 //削除処理
 Route::delete('/admin/movies/{id}/destroy', [MovieController::class, 'destroy']);
 
-//座席表
-Route::get('/sheets', [UserMovieController::class, 'sheets']);
+Route::get('/admin/schedules', [ScheduleController::class, 'adminSchedules']);
 
